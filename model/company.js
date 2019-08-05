@@ -1,8 +1,9 @@
+
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const Schema = mongoose.Schema;
 
-let user = new Schema({
+let company = new Schema({
     name: {
         type: String
     },
@@ -15,13 +16,11 @@ let user = new Schema({
     phoneno: {
         type: String
     },
-    validJwts: {
-        type: Array
-    }
 },
 );
 
-user.methods.generateJwt = function()
+//method to generate Jwt
+company.methods.generateJwt = function()
 {
     var expiry = new Date();
     expiry.setDate(expiry.getDate() + 7);
@@ -32,8 +31,8 @@ user.methods.generateJwt = function()
         name: this.name,
         phoneno : this.phoneno,
         exp: parseInt(expiry.getTime() / 1000),
-    }, "MY_SECRET"); // chnage this to serect in config file
+    }, "MY_SECRET"); // import secret from config file later
 }
 
 
-module.exports = mongoose.model('User', user); 
+module.exports = mongoose.model('Company', company); 
